@@ -9,3 +9,6 @@ admin.site.register(Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ["title", "author", "publication_year"]
 
+
+class BookAdmin(admin.ModelAdmin):
+    list_filter = ["title", "author", "publication_year"]
