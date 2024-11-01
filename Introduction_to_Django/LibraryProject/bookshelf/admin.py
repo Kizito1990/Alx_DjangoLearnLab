@@ -12,3 +12,5 @@ class BookAdmin(admin.ModelAdmin):
 
 class BookAdmin(admin.ModelAdmin):
     list_filter = ["title", "author", "publication_year"]
+    search_fields = ('title', 'author')
+
