@@ -1,4 +1,5 @@
 from django.db import models
+from contrib.utils import admin
 
 # Create your models here.
 class Book(models.Model):
@@ -10,3 +11,7 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    class BookAdmin(admin.ModelAdmin):
+    list_display = ["title", "author", "publication_year"]
+
