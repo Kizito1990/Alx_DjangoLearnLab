@@ -13,7 +13,7 @@ def get_books_in_library(library_name):
 
 # Retrieve the librarian for a library
 def get_librarian_for_library(library_name):
-    library = Library.objects.get(library=library_name)
+    library = Librarian.objects.get(library=library_name)
     return library.librarian
 
 
