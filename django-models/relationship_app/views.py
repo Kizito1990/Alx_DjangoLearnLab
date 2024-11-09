@@ -45,7 +45,7 @@ def register(request):
             return redirect('home')  # Adjust 'home' to your app's homepage or desired redirection.
     else:
         form = UserCreationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'relationship_app/register.html', {'form': form})
 
 
 
