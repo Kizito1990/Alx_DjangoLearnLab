@@ -27,6 +27,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
+SECURE_PROXY_SSL_HEADER, HTTP_X_FORWARDED_PROTO
+
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -68,7 +70,7 @@ SECURE_HSTS_PRELOAD = True  # Allows preloading for HSTS
 SESSION_COOKIE_SECURE = True  # Restricts session cookies to HTTPS only
 CSRF_COOKIE_SECURE = True  # Restricts CSRF cookies to HTTPS only
 
-
+i
 
 # Secure Headers
 X_FRAME_OPTIONS = 'DENY'  # Prevents clickjacking by disallowing the site to be loaded in an iframe
