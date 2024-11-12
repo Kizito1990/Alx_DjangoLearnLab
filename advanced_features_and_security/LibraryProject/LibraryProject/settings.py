@@ -48,6 +48,56 @@ CSP_SCRIPT_SRC = ("'self'", "https://trusted-scripts.example.com")
 CSP_STYLE_SRC = ("'self'", "https://trusted-styles.example.com")
 
 
+
+
+ LibraryProject/settings.py
+
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True  # Enforces HTTPS on all views
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # Sets HSTS policy for one year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Includes subdomains in the HSTS policy
+SECURE_HSTS_PRELOAD = True  # Allows preloading for HSTS
+
+
+
+
+
+# Secure Cookies
+SESSION_COOKIE_SECURE = True  # Restricts session cookies to HTTPS only
+CSRF_COOKIE_SECURE = True  # Restricts CSRF cookies to HTTPS only
+
+
+
+# Secure Headers
+X_FRAME_OPTIONS = 'DENY'  # Prevents clickjacking by disallowing the site to be loaded in an iframe
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents browsers from MIME-sniffing and interpreting files differently
+SECURE_BROWSER_XSS_FILTER = True  # Enables XSS protection in supported browsers
+
+
+server {
+    listen 80;
+    server_name yourdomain.com;
+    return 301 https://$host$request_uri;  # Redirect all HTTP to HTTPS
+}
+
+server {
+    listen 443 ssl;
+    server_name yourdomain.com;
+
+    ssl_certificate /path/to/your/certificate.crt;
+    ssl_certificate_key /path/to/your/private.key;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;  # Forward to Django's Gunicorn/UWSGI app
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
 # Application definition
 
 INSTALLED_APPS = [
