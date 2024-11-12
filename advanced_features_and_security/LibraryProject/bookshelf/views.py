@@ -42,4 +42,16 @@ def can_create(request, title, author, publication date,  book_id):
 
 
 
+# Example of using ORM for secure queries
+def book_detail(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    return render(request, 'bookshelf/book_detail.html', {'book': book})
 
+def search_books(request):
+    query = request.GET.get('q')
+    if query:
+        # Using ORM filter with parameterized queries to prevent SQL injection
+        books = Book.objects.filter(title__icontains=query)
+    else:
+        books = Book.objects.all()
+    return render(request, 'bookshelf/book_list.html', {'books': books})
