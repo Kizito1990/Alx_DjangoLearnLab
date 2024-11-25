@@ -9,7 +9,7 @@ from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 # Create your views here.
 
-class BookList(ListAPIView):
+class BookList(generics.ListAPIView):
     quryset = Book.objects.all()
     serializer_class = BookSerializer
 
