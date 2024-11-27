@@ -9,3 +9,4 @@ urlpatterns = [
     path('books/<int:pk>/delete/', views.BookDeleteView.as_view(), name='book-delete'),
 ]
 
+~                     
