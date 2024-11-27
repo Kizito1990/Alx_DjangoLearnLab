@@ -21,3 +21,5 @@ class BookSerializer(serializers.ModelSerializer):
         if value > timezone.now().date():
             raise serializers.ValidationError("The published date cannot be in the future.")
             return value
+~                                                                                                                                                    
+~                        
