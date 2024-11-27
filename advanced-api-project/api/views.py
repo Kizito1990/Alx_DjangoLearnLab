@@ -3,18 +3,18 @@ from .models import Book
 from .serializers import BookSerializer
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework.permisssions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class BookCreateView(generics.CreateAPIView):
