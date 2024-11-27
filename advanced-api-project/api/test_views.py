@@ -1,3 +1,7 @@
+from rest_framework import status
+
+
+
 class BookAPITestCase(APITestCase):
     def setUp(self):
         # Create a test user
