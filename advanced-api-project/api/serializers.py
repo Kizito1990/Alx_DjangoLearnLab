@@ -10,6 +10,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
+     authors = AuthorSerializer(many=True, read_only=True)
     author_name = serializers.CharField(source = 'author.name', read_only=True)
 
     class Meta:
