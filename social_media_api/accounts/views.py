@@ -1,6 +1,6 @@
-from rest_framework.views import APIView
+from rest_framework.views generics.GenericAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions.IsAuthenticated
 from django.shortcuts import get_object_or_404
 from .models import CustomUser
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST
@@ -34,7 +34,7 @@ class FollowUserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
-        follow_user = get_object_or_404(CustomUser, id=user_id)
+        follow_user = CustomUser.objects.all()
         if request.user.is_following(follow_user):
             return Response({'detail': 'You are already following this user.'}, status=400)
         request.user.follow(follow_user)
@@ -44,7 +44,7 @@ class UnfollowUserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
-        unfollow_user = get_object_or_404(CustomUser, id=user_id)
+        unfollow_user = CustomUser.objects.all()
         if not request.user.is_following(unfollow_user):
             return Response({'detail': 'You are not following this user.'}, status=400)
         request.user.unfollow(unfollow_user)
