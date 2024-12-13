@@ -12,7 +12,7 @@ from rest_framework import status
 from .models import Post, Like
 from notifications.models import Notification
 
-
+from django.shortcuts import get_object_or_404
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')
@@ -50,7 +50,7 @@ class LikePostView(APIView):
 
     def post(self, request, pk):
         try:
-            post = Post.objects.get(pk=pk)
+            post = generics.get_object_or_404(Post, pk=pk)
         except Post.DoesNotExist:
             return Response({"detail": "Post not found"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -79,13 +79,13 @@ class UnlikePostView(APIView):
 
     def post(self, request, pk):
         try:
-            post = Post.objects.get(pk=pk)
+            post = generics.get_object_or_404(Post, pk=pk)
         except Post.DoesNotExist:
             return Response({"detail": "Post not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Check if the like exists
         try:
-            like = Like.objects.get(user=request.user, post=post)
+            like = Like.objects.get_or_create(user=request.user, post=post)
         except Like.DoesNotExist:
             return Response({"detail": "You haven't liked this post"}, status=status.HTTP_400_BAD_REQUEST)
 
