@@ -34,19 +34,19 @@ class FollowUserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
-        user_to_follow = get_object_or_404(CustomUser, id=user_id)
-        if request.user.is_following(user_to_follow):
+        followuser = get_object_or_404(CustomUser, id=user_id)
+        if request.user.is_following(followuser):
             return Response({'detail': 'You are already following this user.'}, status=400)
-        request.user.follow(user_to_follow)
-        return Response({'detail': f'You are now following {user_to_follow.username}.'})
+        request.user.follow(followuser)
+        return Response({'detail': f'You are now following {followuser.username}.'})
 
 class UnfollowUserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
-        user_to_unfollow = get_object_or_404(CustomUser, id=user_id)
-        if not request.user.is_following(user_to_unfollow):
+        unfollowuser = get_object_or_404(CustomUser, id=user_id)
+        if not request.user.is_following(unfollowuser):
             return Response({'detail': 'You are not following this user.'}, status=400)
-        request.user.unfollow(user_to_unfollow)
-        return Response({'detail': f'You have unfollowed {user_to_unfollow.username}.'})
+        request.user.unfollow(unfollowuser)
+        return Response({'detail': f'You have unfollowed {unfollowuser.username}.'})
 
