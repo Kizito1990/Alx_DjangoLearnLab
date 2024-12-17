@@ -1,4 +1,5 @@
 from django import forms
+from .models import Comment
 from .models import Post
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -28,3 +29,16 @@ class PostForm(forms.ModelForm):
         if not title:
             raise forms.ValidationError("Title is required.")
         return title
+
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Add a comment...'}),
+        }
+        labels = {
+            'content': '',
+        }
