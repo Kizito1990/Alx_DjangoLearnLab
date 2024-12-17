@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from .models import Post, Comment
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 
 class PostListView(ListView):
     model = Post
@@ -94,3 +94,20 @@ class CommentDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'pk': self.object.post.id})
+
+
+
+def post_search(request):
+    query = request.GET.get('q', '')
+    results = Post.objects.filter(
+        Q(title__icontains=query) |
+        Q(content__icontains=query) |
+        Q(tags__name__icontains=query)
+    ).distinct()
+    return render(request, 'blog/search_results.html', {'query': query, 'results': results})
+
+
+def posts_by_tag(request, tag_name):
+    posts = Post.objects.filter(tags__name=tag_name)
+    return render(request, 'blog/posts_by_tag.html', {'tag_name': tag_name, 'posts': posts})
+

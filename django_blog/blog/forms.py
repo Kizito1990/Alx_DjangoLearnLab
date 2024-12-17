@@ -22,7 +22,7 @@ class CustomUserCreationForm(UserCreationForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content']  # Include necessary fields
+        fields = ['title', 'content', 'tags']  # Include necessary fields
 
     def clean_title(self):
         title = self.cleaned_data.get('title')
