@@ -50,20 +50,29 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 
-@login_required
-def add_comment(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author = request.user
-            comment.save()
-            return redirect('post_detail', pk=post.id)
-    else:
-        form = CommentForm()
-    return redirect('post_detail', pk=post.id)
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    fields = ['post', 'author',' created_at','updated_at','content']
+    template_name = 'blog/comment_form.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user  # Set the post's author to the logged-in user
+        return super().form_valid(form)
+
+#def add_comment(request, post_id):
+   # post = get_object_or_404(Post, id=post_id)
+    #if request.method == 'POST':
+       # form = CommentForm(request.POST)
+        #if form.is_valid():
+           # comment = form.save(commit=False)
+            #comment.post = post
+            #comment.author = request.user
+            #comment.save()
+           # return redirect('post_detail', pk=post.id)
+   # else:
+       # form = CommentForm()
+   # return redirect('post_detail', pk=post.id)
 
 class CommentUpdateView(UpdateView):
     model = Comment
