@@ -36,6 +36,11 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+        widgets = {
+            'tags': TagWidget(attrs={'class': 'tag-input'}),  # Attach the custom widget
+        }
+        TagWidget()
+
 
 class TagWidget(TextInput):
     """
