@@ -36,13 +36,13 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
-        widgets = {
-                 'tags': TagWidget(
-            attrs={'class': 'form-control', 'id': 'tags', 'placeholder': 'Enter tags by comma separated',
-                   'data-role': 'tagsinput'})
-    }
-            'content': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Add a comment...'}),
-        }
-        labels = {
-            'content': '',
-        }
+
+class TagWidget(TextInput):
+    """
+    Custom widget for handling tags as a comma-separated input.
+    """
+    def __init__(self, attrs=None):
+        default_attrs = {'placeholder': 'Enter tags separated by commas'}
+        if attrs:
+            default_attrs.update(attrs)
+        super().__init__(default_attrs)
